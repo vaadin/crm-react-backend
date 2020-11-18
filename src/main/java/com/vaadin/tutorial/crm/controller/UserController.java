@@ -31,5 +31,5 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-    public String login(@RequestBody User user) {}
+    public void login(@RequestBody User user) {}
 }
