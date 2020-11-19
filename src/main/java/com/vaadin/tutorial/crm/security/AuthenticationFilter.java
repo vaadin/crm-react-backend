@@ -45,5 +45,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter
                 .signWith(SignatureAlgorithm.HS512, "SecretKeyToGenJWTs".getBytes())
                 .compact();
         response.addHeader("Authorization","Bearer " + token);
+        response.setHeader("Access-Control-Expose-Headers", "Authorization");
     }
 }
