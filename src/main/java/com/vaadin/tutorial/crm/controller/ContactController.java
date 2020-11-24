@@ -6,15 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vaadin.tutorial.crm.service.CompanyService;
+import com.vaadin.tutorial.crm.service.ContactService;
 
 @RestController
-public class CompanyController {
+public class ContactController {
   @Autowired
-  CompanyService companyService;
+  ContactService contactService;
 
-  @GetMapping("/companies")
-  public ResponseEntity<Object> getCompanies() {
-    return new ResponseEntity<>(companyService.getStats(), HttpStatus.OK);
+  @GetMapping("/contacts")
+  public ResponseEntity<Object> getContacts() {
+    return new ResponseEntity<>(contactService.findAll(), HttpStatus.OK);
   }
 }
