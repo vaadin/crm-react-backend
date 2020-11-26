@@ -1,6 +1,5 @@
 package com.vaadin.tutorial.crm.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -23,7 +22,6 @@ public class Contact extends AbstractEntity implements Cloneable {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    @JsonIgnore
     private Company company;
 
     @Enumerated(EnumType.STRING)

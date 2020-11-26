@@ -22,13 +22,6 @@ public class UserController {
     	return new BCryptPasswordEncoder();
 	}
 
-    @PostMapping("/signup")
-    public void signUp(@RequestBody User user)
-    {
-        user.setPassword(passwordEncoder().encode(user.getPassword()));
-        userRepository.save(user);
-	}
-
 	@PostMapping("/login")
     public void login(@RequestBody User user) {}
 }
