@@ -20,7 +20,7 @@ public class Contact extends AbstractEntity implements Cloneable {
     @NotEmpty
     private String lastName = "";
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "company_id")
     private Company company;
 

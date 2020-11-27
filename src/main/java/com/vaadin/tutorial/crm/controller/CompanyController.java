@@ -13,8 +13,13 @@ public class CompanyController {
   @Autowired
   CompanyService companyService;
 
+  @GetMapping("/company-info")
+  public ResponseEntity<Object> getCompanyInfo() {
+    return new ResponseEntity<>(companyService.getStats(), HttpStatus.OK);
+  }
+
   @GetMapping("/companies")
   public ResponseEntity<Object> getCompanies() {
-    return new ResponseEntity<>(companyService.getStats(), HttpStatus.OK);
+    return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
   }
 }

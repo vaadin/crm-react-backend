@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,8 +43,13 @@ public class ContactService {
         return contactRepository.count();
     }
 
-    public void delete(Contact contact) {
-        contactRepository.delete(contact);
+    public void delete(Long id) {
+        Optional<Contact> opt = contactRepository.findById(id);
+
+        if (opt.isPresent()) {
+            Contact contact = opt.get();
+            contactRepository.delete(contact);
+        }
     }
 
     public void save(Contact contact) {
@@ -53,6 +59,20 @@ public class ContactService {
             return;
         }
         contactRepository.save(contact);
+    }
+
+    public void update(Long id, Contact c) {
+        Optional<Contact> opt = contactRepository.findById(id);
+
+        if (opt.isPresent()) {
+            Contact contact = opt.get();
+            contact.setEmail(c.getEmail());
+            contact.setFirstName(c.getFirstName());
+            contact.setLastName(c.getLastName());
+            contact.setStatus(c.getStatus());
+            contact.setCompany(c.getCompany());
+            contactRepository.save(contact);
+        }
     }
 
     @PostConstruct
