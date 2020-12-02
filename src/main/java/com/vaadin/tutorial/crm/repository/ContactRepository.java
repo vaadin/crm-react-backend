@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
-    Optional<Contact> findById(Long id);
+    // Optional<Contact> findById(Long id);
     @Query("select c from Contact c " +
           "where lower(c.firstName) like lower(concat('%', :searchTerm, '%')) " +
           "or lower(c.lastName) like lower(concat('%', :searchTerm, '%'))")
