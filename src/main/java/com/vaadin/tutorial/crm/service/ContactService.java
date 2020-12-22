@@ -79,8 +79,36 @@ public class ContactService {
     public void populateTestData() {
         if (companyRepository.count() == 0) {
             companyRepository.saveAll(
-                Stream.of("Path-Way Electronics", "E-Tech Management", "Path-E-Tech Management")
-                    .map(Company::new)
+                Stream.of("Aboitiz Equity Ventures, Inc.@Philippines@NAC Tower, 32nd St, Taguig@@1634",
+                        "Aboitiz Power Corp@Phillippines@110 Penthouse, Legazpi Street, Legaspi Village, Makati@@1224",
+                        "Hilton@United States@7930 Jones Branch Dr, McLean@Virginia@22102",
+                        "Ultimate Software@United States@2 Park Pl@New York@10007",
+                        "Cisco@United States@111 8th Ave #5201@New York@10011",
+                        "Workday@United States@1430 S Ashland Ave@Chicago@60608",
+                        "Salesforce@United States@1430 S Ashland Ave@Chicago@60608",
+                        "Stryker@United States@233 Broadway 24th floor@New York@10279",
+                        "ABB Inc@Canada@201 Westcreek Blvd, Brampton, On@@L6T 5S6",
+                        "Accenture Inc@Canada@3401 Schmon Parkway, Thorold, Canada, ON@@L2V 4Y6",
+                        "ABC Inc@Canada@201 Westcreek Blvd, Brampton, On@@L6T 5S6",
+                        "Jean@Canada@Nelson House, MB@@R0B 1A0",
+                        "Bernard@Canada@799 Keefer St, Vancouver, BC@@V6A 1Y6",
+                        "Leduc@Canada@529 E Hastings St, Vancouver, BC@@V6A 1P9",
+                        "Grenier SAS@Canada@788 Denman St, Vancouver, BC@@V6G 1C9",
+                        "Arhosuo OYj@Finland@Nokkolantie 154@@15880",
+                        "Mattila Inc@Finland@Keskikankaantie 21@@15860",
+                        "Virtala-Helmel@Finland@Muovitie 2@@15860",
+                        "Juuti-Aavikkola@Finland@Arvi Hauvosentie 86@@16730",
+                        "Kotanen Inc@Finland@Tikkakalliontie 29@@15820")
+                    .map(name -> {
+                        String[] data = name.split("@");
+                        Company company = new Company();
+                        company.setName(data[0]);
+                        company.setCountry(data[1]);
+                        company.setAddress(data[2]);
+                        company.setState(data[3]);
+                        company.setZipcode(data[4]);
+                        return company;
+                    })
                     .collect(Collectors.toList()));
         }
 
@@ -102,7 +130,7 @@ public class ContactService {
                         contact.setLastName(split[1]);
                         contact.setCompany(companies.get(r.nextInt(companies.size())));
                         contact.setStatus(Contact.Status.values()[r.nextInt(Contact.Status.values().length)]);
-                        String email = (contact.getFirstName() + "." + contact.getLastName() + "@" + contact.getCompany().getName().replaceAll("[\\s-]", "") + ".com").toLowerCase();
+                        String email = (contact.getFirstName() + "." + contact.getLastName() + "@" + contact.getCompany().getName().replaceAll("[\\s,.-]", "") + ".com").toLowerCase();
                         contact.setEmail(email);
                         return contact;
                     }).collect(Collectors.toList()));

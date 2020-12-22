@@ -21,6 +21,14 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
+    public List<Company> findAll(String filterText) {
+        if(filterText == null || filterText.isEmpty()) {
+            return companyRepository.findAll();
+        } else  {
+            return  companyRepository.search(filterText);
+        }
+    }
+
     public Map<String, Integer> getStats() {
         HashMap<String, Integer> stats = new HashMap<>();
         findAll().forEach(company ->

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vaadin.tutorial.crm.service.CompanyService;
@@ -19,7 +20,7 @@ public class CompanyController {
   }
 
   @GetMapping("/companies")
-  public ResponseEntity<Object> getCompanies() {
-    return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
+  public ResponseEntity<Object> getCompanies(@RequestParam(required=false, value="search") String search) {
+    return new ResponseEntity<>(companyService.findAll(search), HttpStatus.OK);
   }
 }
