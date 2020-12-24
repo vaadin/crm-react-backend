@@ -21,10 +21,10 @@ public class Company extends AbstractEntity {
   private String zipcode="";
   private String state="";
 
-  @OneToMany(mappedBy = "company4d")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company4d")
   private List<Deal> deals = new LinkedList<>();
 
-  @OneToMany(mappedBy = "company")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
   @JsonIgnore
   private List<Contact> employees = new LinkedList<>();
 
