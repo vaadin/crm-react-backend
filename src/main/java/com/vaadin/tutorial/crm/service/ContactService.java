@@ -80,7 +80,7 @@ public class ContactService {
         if (companyRepository.count() == 0) {
             companyRepository.saveAll(
                 Stream.of("Aboitiz Equity Ventures, Inc.@Philippines@NAC Tower, 32nd St, Taguig@@1634",
-                        "Aboitiz Power Corp@Phillippines@110 Penthouse, Legazpi Street, Legaspi Village, Makati@@1224",
+                        "Aboitiz Power Corp@Philippines@110 Penthouse, Legazpi Street, Legaspi Village, Makati@@1224",
                         "Hilton@United States@7930 Jones Branch Dr, McLean@Virginia@22102",
                         "Ultimate Software@United States@2 Park Pl@New York@10007",
                         "Cisco@United States@111 8th Ave #5201@New York@10011",
@@ -92,8 +92,8 @@ public class ContactService {
                         "ABC Inc@Canada@201 Westcreek Blvd, Brampton, On@@L6T 5S6",
                         "Jean@Canada@Nelson House, MB@@R0B 1A0",
                         "Bernard@Canada@799 Keefer St, Vancouver, BC@@V6A 1Y6",
-                        "Leduc@Canada@529 E Hastings St, Vancouver, BC@@V6A 1P9",
-                        "Grenier SAS@Canada@788 Denman St, Vancouver, BC@@V6G 1C9",
+                        "Leduc@Switzerland@Waisenhauspl. 29@@3011",
+                        "Grenier SAS@Germany@Kronenstraße 43@@10117",
                         "Arhosuo OYj@Finland@Nokkolantie 154@@15880",
                         "Mattila Inc@Finland@Keskikankaantie 21@@15860",
                         "Virtala-Helmel@Finland@Muovitie 2@@15860",
