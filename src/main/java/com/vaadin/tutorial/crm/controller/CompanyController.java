@@ -20,6 +20,11 @@ public class CompanyController {
   @Autowired
   CompanyService companyService;
 
+  @GetMapping("/countries")
+  public ResponseEntity<Object> getCountries() {
+    return new ResponseEntity<>(companyService.getCountries(), HttpStatus.OK);
+  }
+
   @GetMapping("/company-info")
   public ResponseEntity<Object> getCompanyInfo() {
     return new ResponseEntity<>(companyService.getStats(), HttpStatus.OK);

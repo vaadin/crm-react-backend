@@ -40,6 +40,10 @@ public class CompanyService {
         return stats;
     }
 
+    public String[] getCountries() {
+        return new String[] {"United States", "Canada", "Filand", "Germany", "Switzerland", "Philippines"};
+    }
+
     public void delete(Long id) {
         Optional<Company> opt = companyRepository.findById(id);
 
