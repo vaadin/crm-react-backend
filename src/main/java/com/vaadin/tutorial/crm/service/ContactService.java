@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.io.IOException;
 
 @Service
 public class ContactService {
@@ -52,21 +53,32 @@ public class ContactService {
         }
     }
 
-    public void save(Contact contact) {
+    public void save(Contact contact) throws IOException {
         if (contact == null) {
             LOGGER.log(Level.SEVERE,
                 "Contact is null. Are you sure you have connected your form to the application?");
             return;
         }
+        boolean exists = contactRepository.existsByEmail(contact.getEmail().toLowerCase());
+        if (exists) {
+            throw new IOException("Contact is already exists");
+        }
+        contact.setEmail(contact.getEmail().toLowerCase());
         contactRepository.save(contact);
     }
 
-    public void update(Long id, Contact c) {
+    public void update(Long id, Contact c) throws IOException {
         Optional<Contact> opt = contactRepository.findById(id);
+        String email = c.getEmail().toLowerCase();
 
         if (opt.isPresent()) {
             Contact contact = opt.get();
-            contact.setEmail(c.getEmail());
+
+            boolean exists = contactRepository.existsByEmail(email);
+            if (exists && !email.equals(contact.getEmail())) {
+                throw new IOException("Contact is already exists");
+            }
+            contact.setEmail(email);
             contact.setFirstName(c.getFirstName());
             contact.setLastName(c.getLastName());
             contact.setStatus(c.getStatus());

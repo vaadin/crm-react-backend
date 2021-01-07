@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vaadin.tutorial.crm.entity.Contact;
 import com.vaadin.tutorial.crm.service.ContactService;
 
+import java.io.IOException;
+
 @RestController
 public class ContactController {
   @Autowired
@@ -26,13 +28,23 @@ public class ContactController {
   }
 
   @PostMapping("/contact")
-  public void addContact(@RequestBody Contact contact) {
-    contactService.save(contact);
+  public ResponseEntity<String> addContact(@RequestBody Contact contact) {
+    try {
+      contactService.save(contact);
+      return new ResponseEntity<>("success", HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+    }
   }
 
   @PutMapping("/contact/{id}")
-  public void updateContact(@PathVariable(value="id") Long id, @RequestBody Contact contact) {
-    contactService.update(id, contact);
+  public ResponseEntity<String> updateContact(@PathVariable(value="id") Long id, @RequestBody Contact contact) {
+    try {
+      contactService.update(id, contact);
+      return new ResponseEntity<>("success", HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+    }
   }
 
   @DeleteMapping("/contact/{id}")

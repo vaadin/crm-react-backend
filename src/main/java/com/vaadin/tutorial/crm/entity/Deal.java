@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Deal extends AbstractEntity {
 
   public enum Status {
-    New, ProoposalSent, ClosedWon, ClosedLost
+    New, ProposalSent, ClosedWon, ClosedLost
   }
 
   @NotNull
