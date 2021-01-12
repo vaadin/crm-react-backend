@@ -133,6 +133,8 @@ public class ContactService {
                     "Emily Stewart", "Corinne Davis", "Ryann Davis", "Yurem Jackson", "Kelly Gustavsson",
                     "Eileen Walker", "Katelyn Martin", "Israel Carlsson", "Quinn Hansson", "Makena Smith",
                     "Danielle Watson", "Leland Harris", "Gunner Karlsen", "Jamar Olsson", "Lara Martin",
+                    "Gabrielle Andersson", "Brian Andersson", "Eduardo Carlsson", "Koen Olsen", "Alejandro Olsen",
+                    "Ann Karlsson", "Remington Gustavsson", "Rene Svensson", "Elvis Stewart", "Solomon Davis",
                     "Ann Andersson", "Remington Andersson", "Rene Carlsson", "Elvis Olsen", "Solomon Olsen",
                     "Jaydan Jackson", "Bernard Nilsen")
                     .map(name -> {

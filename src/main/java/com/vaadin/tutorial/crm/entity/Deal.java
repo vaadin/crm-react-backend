@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 public class Deal extends AbstractEntity {
@@ -20,8 +22,18 @@ public class Deal extends AbstractEntity {
   private Double price;
 
   @ManyToOne()
-  @JoinColumn(name = "deal_id")
+  @JoinColumn(name = "deal_company")
   private Company company4d;
+
+  @ManyToOne()
+  @JoinColumn(name = "deal_user")
+  private User user;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal")
+  private List<Note> notes = new LinkedList<>();
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal4r")
+  private List<Role> roles = new LinkedList<>();
 
   @Enumerated(EnumType.STRING)
   @NotNull
@@ -55,7 +67,7 @@ public class Deal extends AbstractEntity {
   }
 
   public void setStatus(Status status) {
-      this.status = status;
+    this.status = status;
   }
 
   public void setCompany4d(Company company4d) {
@@ -64,6 +76,22 @@ public class Deal extends AbstractEntity {
 
   @JsonIgnore
   public Company getCompany() {
-      return company4d;
+    return company4d;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public List<Note> getNotes() {
+    return notes;
+  }
+
+  public List<Role> getRoles() {
+    return roles;
   }
 }

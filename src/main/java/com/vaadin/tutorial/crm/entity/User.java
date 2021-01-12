@@ -1,13 +1,17 @@
 package com.vaadin.tutorial.crm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity {
   private String name;
   private String password;
 
-  // @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  private List<Deal> deals = new LinkedList<>();
 
   public User() {
   }
@@ -25,6 +29,7 @@ public class User extends AbstractEntity {
     this.name = name;
   }
 
+  @JsonIgnore
   public String getPassword() {
     return password;
   }
