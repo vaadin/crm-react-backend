@@ -13,7 +13,6 @@ public class Role extends AbstractEntity {
   }
 
   @NotNull
-  @NotEmpty
   private Long contact_id;
 
   @NotNull
