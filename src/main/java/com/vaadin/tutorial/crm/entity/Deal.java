@@ -3,7 +3,6 @@ package com.vaadin.tutorial.crm.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotEmpty;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,7 +73,6 @@ public class Deal extends AbstractEntity {
     this.company4d = company4d;
   }
 
-  @JsonIgnore
   public Company getCompany() {
     return company4d;
   }

@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.List;
+import java.util.Optional;
+import java.io.IOException;
 
 @Service
 public class DealService {
@@ -32,6 +34,27 @@ public class DealService {
 
     public List<Deal> findAll() {
         return dealRepository.findAll();
+    }
+
+    public void save(Deal deal) throws IOException {
+        if (deal == null) {
+            LOGGER.log(Level.SEVERE,
+                "Contact is null. Are you sure you have connected your form to the application?");
+            return;
+        }
+        dealRepository.save(deal);
+    }
+
+    public void update(Long id, Deal d) throws IOException {
+        Optional<Deal> opt = dealRepository.findById(id);
+
+        if (opt.isPresent()) {
+            Deal deal = opt.get();
+            deal.setName(d.getName());
+            deal.setPrice(d.getPrice());
+            deal.setStatus(d.getStatus());
+            dealRepository.save(deal);
+        }
     }
 
     @PostConstruct
