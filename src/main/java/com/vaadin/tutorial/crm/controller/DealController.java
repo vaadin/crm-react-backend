@@ -6,14 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
+import java.io.IOException;
 
 import com.vaadin.tutorial.crm.entity.Deal;
 import com.vaadin.tutorial.crm.service.DealService;
-
-import java.io.IOException;
 
 @RestController
 public class DealController {
@@ -21,7 +22,13 @@ public class DealController {
   DealService dealService;
 
   @GetMapping("/deals")
-  public ResponseEntity<Object> getDeals() {
+  public ResponseEntity<Object> getDeals(@RequestParam(required=false) Map<String, String> all) {
+    String company = all.get("company");
+    String contact = all.get("contact");
+    String user = all.get("user");
+    String min = all.get("min");
+    String max = all.get("max");
+    String isActive = all.get("active");
     return new ResponseEntity<>(dealService.findAll(), HttpStatus.OK);
   }
 

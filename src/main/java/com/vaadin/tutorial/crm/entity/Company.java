@@ -6,8 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Company extends AbstractEntity {
   @NotNull
   @NotEmpty
@@ -21,10 +24,10 @@ public class Company extends AbstractEntity {
   private String zipcode="";
   private String state="";
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company4d")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company4d", fetch=FetchType.LAZY)
   private List<Deal> deals = new LinkedList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", fetch=FetchType.LAZY)
   @JsonIgnore
   private List<Contact> employees = new LinkedList<>();
 
@@ -83,6 +86,7 @@ public class Company extends AbstractEntity {
     return employees;
   }
 
+  @Transient
   public List<Deal> getDeals() {
     return deals;
   }
