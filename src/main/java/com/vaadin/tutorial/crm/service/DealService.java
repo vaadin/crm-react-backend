@@ -32,8 +32,16 @@ public class DealService {
         this.userRepository = userRepository;
     }
 
-    public List<Deal> findAll() {
-        return dealRepository.findAll();
+    public List<Deal> findAll(List<String> companies, List<String> contacts, List<String> users, Double minPrice, Double maxPrice, String isActive) {
+        List<Deal> result = dealRepository.search(companies, users, minPrice, maxPrice, isActive);
+        if (contacts == null) {
+            return result;
+        }
+        return result.stream()
+            .filter(deal -> deal.getRoles().stream()
+                    .filter(contact -> contacts.contains(contact.getContactId().toString()))
+                    .count() > 0)
+            .collect(Collectors.toList());
     }
 
     public void save(Deal deal) throws IOException {
@@ -45,7 +53,7 @@ public class DealService {
         dealRepository.save(deal);
     }
 
-    public void update(Long id, Deal d) throws IOException {
+    public Deal update(Long id, Deal d) throws IOException {
         Optional<Deal> opt = dealRepository.findById(id);
 
         if (opt.isPresent()) {
@@ -54,7 +62,9 @@ public class DealService {
             deal.setPrice(d.getPrice());
             deal.setStatus(d.getStatus());
             dealRepository.save(deal);
+            return deal;
         }
+        return opt.get();
     }
 
     @PostConstruct
