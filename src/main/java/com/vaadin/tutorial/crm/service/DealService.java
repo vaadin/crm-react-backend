@@ -97,7 +97,7 @@ public class DealService {
                         double price = Math.round(r.nextFloat() * 1000000) / 100.0;
                         deal.setPrice(price);
                         deal.setStatus(Deal.Status.values()[r.nextInt(Deal.Status.values().length)]);
-                        deal.setCompany4d(companies.get(r.nextInt(companies.size())));
+                        deal.setCompany(companies.get(r.nextInt(companies.size())));
                         deal.setUser(users.get(idx % users.size()));
                         return deal;
                     })

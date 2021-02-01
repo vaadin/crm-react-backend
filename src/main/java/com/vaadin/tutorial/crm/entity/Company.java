@@ -24,7 +24,7 @@ public class Company extends AbstractEntity {
   private String zipcode="";
   private String state="";
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company4d", fetch=FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", fetch=FetchType.LAZY)
   private List<Deal> deals = new LinkedList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", fetch=FetchType.LAZY)
@@ -86,7 +86,6 @@ public class Company extends AbstractEntity {
     return employees;
   }
 
-  @Transient
   public List<Deal> getDeals() {
     return deals;
   }

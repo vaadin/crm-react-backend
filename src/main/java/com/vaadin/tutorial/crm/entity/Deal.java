@@ -21,11 +21,9 @@ public class Deal extends AbstractEntity {
   private Double price;
 
   @ManyToOne()
-  @JoinColumn(name = "deal_company")
-  private Company company4d;
+  private Company company;
 
   @ManyToOne()
-  @JoinColumn(name = "deal_user")
   private User user;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal")
@@ -69,12 +67,12 @@ public class Deal extends AbstractEntity {
     this.status = status;
   }
 
-  public void setCompany4d(Company company4d) {
-    this.company4d = company4d;
+  public void setCompany(Company company) {
+    this.company = company;
   }
 
   public Company getCompany() {
-    return company4d;
+    return company;
   }
 
   public void setUser(User user) {

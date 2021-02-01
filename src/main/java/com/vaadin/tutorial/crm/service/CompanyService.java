@@ -3,6 +3,7 @@ package com.vaadin.tutorial.crm.service;
 import com.vaadin.tutorial.crm.entity.Company;
 import com.vaadin.tutorial.crm.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
+import com.vaadin.tutorial.crm.model.CompanyDealSummaryDTO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +26,13 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public List<Company> findAll(String filterText) {
-        if(filterText == null || filterText.isEmpty()) {
-            return companyRepository.findAll();
-        } else  {
-            return  companyRepository.search(filterText);
-        }
+    public List<CompanyDealSummaryDTO> findAll(String filterText) {
+        // if(filterText == null || filterText.isEmpty()) {
+        //     return companyRepository.findAll();
+        // } else  {
+        //     return companyRepository.search(filterText);
+        // }
+        return companyRepository.search(filterText);
     }
 
     public Map<String, Integer> getStats() {
@@ -41,7 +43,7 @@ public class CompanyService {
     }
 
     public String[] getCountries() {
-        return new String[] {"United States", "Canada", "Filand", "Germany", "Switzerland", "Philippines"};
+        return new String[] {"United States", "Canada", "Finland", "Germany", "Switzerland", "Philippines"};
     }
 
     public void delete(Long id) {
