@@ -27,11 +27,6 @@ public class CompanyService {
     }
 
     public List<CompanyDealSummaryDTO> findAll(String filterText) {
-        // if(filterText == null || filterText.isEmpty()) {
-        //     return companyRepository.findAll();
-        // } else  {
-        //     return companyRepository.search(filterText);
-        // }
         return companyRepository.search(filterText);
     }
 

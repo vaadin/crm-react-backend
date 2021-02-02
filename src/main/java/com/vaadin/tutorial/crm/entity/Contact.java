@@ -21,7 +21,6 @@ public class Contact extends AbstractEntity implements Cloneable {
     private String lastName = "";
 
     @ManyToOne()
-    @JoinColumn(name = "company_id")
     private Company company;
 
     @Enumerated(EnumType.STRING)

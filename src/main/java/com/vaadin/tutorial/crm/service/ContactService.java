@@ -2,6 +2,7 @@ package com.vaadin.tutorial.crm.service;
 
 import com.vaadin.tutorial.crm.entity.Company;
 import com.vaadin.tutorial.crm.entity.Contact;
+import com.vaadin.tutorial.crm.model.ContactCompanyDTO;
 import com.vaadin.tutorial.crm.repository.CompanyRepository;
 import com.vaadin.tutorial.crm.repository.ContactRepository;
 import org.springframework.stereotype.Service;
@@ -32,12 +33,8 @@ public class ContactService {
         return contactRepository.findAll();
     }
 
-    public List<Contact> findAll(String filterText) {
-        if(filterText == null || filterText.isEmpty()) {
-            return contactRepository.findAll();
-        } else  {
-            return  contactRepository.search(filterText);
-        }
+    public List<ContactCompanyDTO> findAll(String filterText) {
+        return  contactRepository.search(filterText);
     }
 
     public long count() {

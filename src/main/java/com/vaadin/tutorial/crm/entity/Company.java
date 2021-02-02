@@ -1,6 +1,5 @@
 package com.vaadin.tutorial.crm.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +27,6 @@ public class Company extends AbstractEntity {
   private List<Deal> deals = new LinkedList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", fetch=FetchType.LAZY)
-  @JsonIgnore
   private List<Contact> employees = new LinkedList<>();
 
   public Company() {
