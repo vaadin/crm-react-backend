@@ -3,6 +3,7 @@ package com.vaadin.tutorial.crm.service;
 import com.vaadin.tutorial.crm.entity.Deal;
 import com.vaadin.tutorial.crm.entity.Company;
 import com.vaadin.tutorial.crm.entity.User;
+import com.vaadin.tutorial.crm.model.ComplexDealDTO;
 import com.vaadin.tutorial.crm.repository.DealRepository;
 import com.vaadin.tutorial.crm.repository.UserRepository;
 import com.vaadin.tutorial.crm.repository.CompanyRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.annotation.PostConstruct;
 import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -32,16 +35,9 @@ public class DealService {
         this.userRepository = userRepository;
     }
 
-    public List<Deal> findAll(List<String> companies, List<String> contacts, List<String> users, Double minPrice, Double maxPrice, String isActive) {
-        List<Deal> result = dealRepository.search(companies, users, minPrice, maxPrice, isActive);
-        if (contacts == null) {
-            return result;
-        }
-        return result.stream()
-            .filter(deal -> deal.getRoles().stream()
-                    .filter(contact -> contacts.contains(contact.getContactId().toString()))
-                    .count() > 0)
-            .collect(Collectors.toList());
+    public List<ComplexDealDTO> findAll(List<String> companies, List<String> contacts, List<String> users, Double minPrice, Double maxPrice, String isActive) {
+        List<ComplexDealDTO> result = dealRepository.search(companies, contacts, users, minPrice, maxPrice, isActive);
+        return result;
     }
 
     public void save(Deal deal) throws IOException {
@@ -53,7 +49,7 @@ public class DealService {
         dealRepository.save(deal);
     }
 
-    public Deal update(Long id, Deal d) throws IOException {
+    public Map<String, Object> update(Long id, Deal d) throws IOException {
         Optional<Deal> opt = dealRepository.findById(id);
 
         if (opt.isPresent()) {
@@ -62,9 +58,16 @@ public class DealService {
             deal.setPrice(d.getPrice());
             deal.setStatus(d.getStatus());
             dealRepository.save(deal);
-            return deal;
+
+            Map<String, Object> updatedItem = new HashMap();
+            updatedItem.put("id", deal.getId());
+            updatedItem.put("status", deal.getStatus());
+            return updatedItem;
         }
-        return opt.get();
+        Map<String, Object> orgItem = new HashMap();
+        orgItem.put("id", opt.get().getId());
+        orgItem.put("status", opt.get().getStatus());
+        return orgItem;
     }
 
     @PostConstruct

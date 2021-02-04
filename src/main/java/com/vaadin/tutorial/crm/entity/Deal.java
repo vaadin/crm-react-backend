@@ -26,11 +26,11 @@ public class Deal extends AbstractEntity {
   @ManyToOne()
   private User user;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal", fetch=FetchType.LAZY)
   private List<Note> notes = new LinkedList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal4r")
-  private List<Role> roles = new LinkedList<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "deal", fetch=FetchType.LAZY)
+  private List<DealContact> dealContacts = new LinkedList<>();
 
   @Enumerated(EnumType.STRING)
   @NotNull
@@ -87,7 +87,7 @@ public class Deal extends AbstractEntity {
     return notes;
   }
 
-  public List<Role> getRoles() {
-    return roles;
+  public List<DealContact> getDealContacts() {
+    return dealContacts;
   }
 }

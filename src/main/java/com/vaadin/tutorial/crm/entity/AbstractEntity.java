@@ -15,10 +15,6 @@ public abstract class AbstractEntity {
         return id;
     }
 
-    public boolean isPersisted() {
-        return id != null;
-    }
-
     @Override
     public int hashCode() {
         if (getId() != null) {

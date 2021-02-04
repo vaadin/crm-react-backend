@@ -52,7 +52,7 @@ public class DealController {
   @PutMapping("/deal/{id}")
   public ResponseEntity<Object> updateDeal(@PathVariable(value="id") Long id, @RequestBody Deal deal) {
     try {
-      Deal updatedDeal = dealService.update(id, deal);
+      Map<String, Object> updatedDeal = dealService.update(id, deal);
       return new ResponseEntity<>(updatedDeal, HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);

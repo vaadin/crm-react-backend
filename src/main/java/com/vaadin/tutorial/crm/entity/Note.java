@@ -15,7 +15,6 @@ public class Note extends AbstractEntity {
   private Timestamp created_at;
 
   @ManyToOne()
-  @JoinColumn(name = "deal_note")
   private Deal deal;
 
   public Note() {

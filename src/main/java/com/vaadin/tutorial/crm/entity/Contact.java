@@ -23,6 +23,9 @@ public class Contact extends AbstractEntity implements Cloneable {
     @ManyToOne()
     private Company company;
 
+    @OneToOne(mappedBy = "deal", fetch=FetchType.LAZY)
+    private DealContact dealContact;
+
     @Enumerated(EnumType.STRING)
     @NotNull
     private Contact.Status status;
@@ -70,6 +73,14 @@ public class Contact extends AbstractEntity implements Cloneable {
 
     public Company getCompany() {
         return company;
+    }
+
+    public void setDealContact(DealContact dc) {
+        this.dealContact = dc;
+    }
+
+    public DealContact getDealContact() {
+        return dealContact;
     }
 
     @Override
