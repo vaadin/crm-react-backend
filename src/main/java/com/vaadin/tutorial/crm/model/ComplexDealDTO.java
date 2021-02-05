@@ -10,7 +10,7 @@ public class ComplexDealDTO {
   public String name;
   public Double price;
   public Deal.Status status;
-  public User user;
+  public Map<String, Object> user;
   public Map<String, Object> company;
 
   public ComplexDealDTO(
@@ -26,10 +26,13 @@ public class ComplexDealDTO {
     this.name = name;
     this.price = price;
     this.status = status;
-    this.user = user;
 
-    company = new HashMap();
-    company.put("id", companyID);
-    company.put("name", companyName);
+    this.user = new HashMap();
+    this.user.put("id", user.getId());
+    this.user.put("name", user.getName());
+
+    this.company = new HashMap();
+    this.company.put("id", companyID);
+    this.company.put("name", companyName);
   }
 }

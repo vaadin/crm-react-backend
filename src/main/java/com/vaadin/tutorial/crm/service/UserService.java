@@ -1,6 +1,7 @@
 package com.vaadin.tutorial.crm.service;
 
 import com.vaadin.tutorial.crm.entity.User;
+import com.vaadin.tutorial.crm.model.UserDTO;
 import com.vaadin.tutorial.crm.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +22,9 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDTO> findAll() {
+        List<UserDTO> result = userRepository.search();
+        return result;
     }
 
     @Override

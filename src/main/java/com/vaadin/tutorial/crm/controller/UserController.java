@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.vaadin.tutorial.crm.entity.User;
-import com.vaadin.tutorial.crm.repository.UserRepository;
 import com.vaadin.tutorial.crm.service.UserService;
 
 @RestController

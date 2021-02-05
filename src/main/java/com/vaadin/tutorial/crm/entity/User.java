@@ -1,6 +1,5 @@
 package com.vaadin.tutorial.crm.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +28,6 @@ public class User extends AbstractEntity {
     this.name = name;
   }
 
-  @JsonIgnore
   public String getPassword() {
     return password;
   }
