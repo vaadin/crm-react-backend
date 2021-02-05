@@ -1,6 +1,7 @@
 package com.vaadin.tutorial.crm.security;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter
 {
@@ -36,11 +38,11 @@ public class AuthorizationFilter extends BasicAuthenticationFilter
         String token = request.getHeader("Authorization");
         if(token != null)
         {
-            String user = Jwts.parser().setSigningKey("SecretKeyToGenJWTs".getBytes())
-                    .parseClaimsJws(token.replace("Bearer",""))
-                    .getBody()
-                    .getSubject();
-            if(user != null)
+            Claims body = Jwts.parser().setSigningKey("SecretKeyToGenJWTs".getBytes())
+                    .parseClaimsJws(token.replaceAll("Bearer ",""))
+                    .getBody();
+            String user = body.getSubject();
+            if(user != null && !body.getExpiration().before(new Date()))
             {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
