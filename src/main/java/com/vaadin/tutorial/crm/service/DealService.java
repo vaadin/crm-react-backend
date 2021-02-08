@@ -65,8 +65,7 @@ public class DealService {
             return updatedItem;
         }
         Map<String, Object> orgItem = new HashMap();
-        orgItem.put("id", opt.get().getId());
-        orgItem.put("status", opt.get().getStatus());
+        orgItem.put("id", "0");
         return orgItem;
     }
 

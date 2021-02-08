@@ -53,7 +53,10 @@ public class DealController {
   public ResponseEntity<Object> updateDeal(@PathVariable(value="id") Long id, @RequestBody Deal deal) {
     try {
       Map<String, Object> updatedDeal = dealService.update(id, deal);
-      return new ResponseEntity<>(updatedDeal, HttpStatus.OK);
+      if (updatedDeal.get("id") != "0") {
+        return new ResponseEntity<>(updatedDeal, HttpStatus.OK);
+      }
+      return new ResponseEntity<>("No such Item", HttpStatus.BAD_REQUEST);
     } catch (IOException e) {
       return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
     }
