@@ -1,6 +1,5 @@
 package com.vaadin.tutorial.crm.entity;
 
-// import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotEmpty;
@@ -29,9 +28,6 @@ public class DealContact extends AbstractEntity {
   @OneToOne()
   private Contact contact;
 
-  // @EmbededCollection
-  // private List<Roles> roles;
-
   public DealContact() {
   }
 
@@ -57,7 +53,6 @@ public class DealContact extends AbstractEntity {
     this.role = role;
   }
 
-  // @JsonIgnore
   public Deal getDeal() {
     return deal;
   }

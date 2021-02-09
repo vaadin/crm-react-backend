@@ -8,11 +8,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Company extends AbstractEntity {
-  @NotNull
   @NotEmpty
   private String name="";
 
-  @NotNull
   @NotEmpty
   private String country="";
 

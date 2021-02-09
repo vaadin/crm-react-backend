@@ -12,18 +12,16 @@ public class Contact extends AbstractEntity implements Cloneable {
         ImportedLead, NotContacted, Contacted, Customer, ClosedLost
     }
 
-    @NotNull
     @NotEmpty
     private String firstName = "";
 
-    @NotNull
     @NotEmpty
     private String lastName = "";
 
     @ManyToOne()
     private Company company;
 
-    @OneToOne(mappedBy = "deal", fetch=FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "deal", fetch=FetchType.LAZY)
     private DealContact dealContact;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +29,6 @@ public class Contact extends AbstractEntity implements Cloneable {
     private Contact.Status status;
 
     @Email
-    @NotNull
     @NotEmpty
     private String email = "";
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.List;
-import java.util.Arrays;
+import java.util.stream.*;
 import java.io.IOException;
 
 import com.vaadin.tutorial.crm.entity.Deal;
@@ -26,11 +26,11 @@ public class DealController {
   @GetMapping("/deals")
   public ResponseEntity<Object> getDeals(@RequestParam(required=false) Map<String, String> all) {
     String company = all.get("company");
-    List<String> companies = company == null ? null : Arrays.asList(company.split(","));
+    List<Long> companies = company == null ? null : Stream.of(company.split(",")).map(Long::valueOf).collect(Collectors.toList());
     String contact = all.get("contact");
-    List<String> contacts = contact == null ? null : Arrays.asList(contact.split(","));
+    List<Long> contacts = contact == null ? null : Stream.of(contact.split(",")).map(Long::valueOf).collect(Collectors.toList());
     String user = all.get("user");
-    List<String> users = user == null ? null : Arrays.asList(user.split(","));
+    List<Long> users = user == null ? null : Stream.of(user.split(",")).map(Long::valueOf).collect(Collectors.toList());
     String min = all.get("min");
     Double minPrice = (min == null) ? 0 : Double.parseDouble(min);
     String max = all.get("max");

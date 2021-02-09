@@ -13,7 +13,6 @@ public class Deal extends AbstractEntity {
     New, ProposalSent, ClosedWon, ClosedLost
   }
 
-  @NotNull
   @NotEmpty
   private String name;
 

@@ -1,5 +1,7 @@
 package com.vaadin.tutorial.crm.model;
 import com.vaadin.tutorial.crm.entity.Contact;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ContactCompanyDTO {
   public Long id;
@@ -7,8 +9,7 @@ public class ContactCompanyDTO {
   public String lastName;
   public String email;
   public Contact.Status status;
-  public Long companyID;
-  public String companyName;
+  public Map<String, Object> company;
 
   public ContactCompanyDTO(
     final Long id,
@@ -24,7 +25,8 @@ public class ContactCompanyDTO {
     this.lastName = lastName;
     this.email = email;
     this.status = status;
-    this.companyID = companyID;
-    this.companyName = companyName;
+    this.company = new HashMap();
+    this.company.put("id", companyID);
+    this.company.put("name", companyName);
   }
 }

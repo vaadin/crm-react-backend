@@ -35,7 +35,7 @@ public class DealService {
         this.userRepository = userRepository;
     }
 
-    public List<ComplexDealDTO> findAll(List<String> companies, List<String> contacts, List<String> users, Double minPrice, Double maxPrice, String isActive) {
+    public List<ComplexDealDTO> findAll(List<Long> companies, List<Long> contacts, List<Long> users, Double minPrice, Double maxPrice, String isActive) {
         List<ComplexDealDTO> result = dealRepository.search(companies, contacts, users, minPrice, maxPrice, isActive);
         return result;
     }

@@ -6,9 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.sql.Timestamp;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Note extends AbstractEntity {
+  @NotEmpty
   private String text;
 
   @NotNull
