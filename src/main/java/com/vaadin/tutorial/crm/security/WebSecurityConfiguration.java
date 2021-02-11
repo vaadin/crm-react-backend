@@ -19,22 +19,19 @@ import java.util.logging.Logger;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-	private static final Logger LOGGER = Logger.getLogger(WebSecurityConfiguration.class.getName());
-	private UserDetailsService userDetailsService;
-	private static final String[] AUTH_WHITELIST = {
-		"/login",
-		"/signup"
-	};
+    private static final Logger LOGGER = Logger.getLogger(WebSecurityConfiguration.class.getName());
+    private UserDetailsService userDetailsService;
+    private static final String[] AUTH_WHITELIST = { "/login" };
 
     public WebSecurityConfiguration(UserDetailsService userDetailsService)
     {
         this.userDetailsService = userDetailsService;
-	}
+    }
 
     protected void configure(HttpSecurity httpSecurity) throws Exception
     {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
-				.antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new AuthenticationFilter(authenticationManager()))
                 .addFilter(new AuthorizationFilter(authenticationManager()))

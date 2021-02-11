@@ -19,7 +19,7 @@ public class UserController {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-    	return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @GetMapping("/users")
@@ -27,6 +27,6 @@ public class UserController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-	@PostMapping("/login")
+    @PostMapping("/login")
     public void login(@RequestBody User user) {}
 }

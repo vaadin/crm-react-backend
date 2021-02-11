@@ -3,6 +3,8 @@ package com.vaadin.tutorial.crm.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotEmpty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class DealContact extends AbstractEntity {
@@ -25,6 +27,7 @@ public class DealContact extends AbstractEntity {
   @ManyToOne()
   private Deal deal;
 
+  @OnDelete(action = OnDeleteAction.CASCADE)
   @OneToOne()
   private Contact contact;
 
