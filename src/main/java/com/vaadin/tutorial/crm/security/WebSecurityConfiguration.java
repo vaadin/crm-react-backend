@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.logging.Logger;
 
 @EnableWebSecurity
@@ -37,10 +36,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
+
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception
     {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource()
     {
@@ -50,5 +51,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return source;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

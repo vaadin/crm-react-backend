@@ -8,7 +8,7 @@ import com.vaadin.tutorial.crm.repository.DealRepository;
 import com.vaadin.tutorial.crm.repository.UserRepository;
 import com.vaadin.tutorial.crm.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.annotation.PostConstruct;
 import java.util.Random;
 import java.util.Map;
@@ -28,14 +28,28 @@ public class DealService {
     private DealRepository dealRepository;
     private CompanyRepository companyRepository;
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public DealService(DealRepository dealRepository, CompanyRepository companyRepository, UserRepository userRepository) {
+    public DealService(
+        DealRepository dealRepository,
+        CompanyRepository companyRepository,
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder
+    ) {
         this.dealRepository = dealRepository;
         this.companyRepository = companyRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public List<ComplexDealDTO> findAll(List<Long> companies, List<Long> contacts, List<Long> users, Double minPrice, Double maxPrice, String isActive) {
+    public List<ComplexDealDTO> findAll(
+        List<Long> companies,
+        List<Long> contacts,
+        List<Long> users,
+        Double minPrice,
+        Double maxPrice,
+        String isActive
+    ) {
         List<ComplexDealDTO> result = dealRepository.search(companies, contacts, users, minPrice, maxPrice, isActive);
         return result;
     }
@@ -81,7 +95,7 @@ public class DealService {
                         String[] split = name.split(" ");
                         User user = new User();
                         user.setName(split[0]);
-                        user.setPassword(new BCryptPasswordEncoder().encode(split[1]));
+                        user.setPassword(passwordEncoder.encode(split[1]));
                         return user;
                     }).collect(Collectors.toList()));
         }
