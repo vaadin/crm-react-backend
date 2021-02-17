@@ -4,6 +4,7 @@ import com.vaadin.tutorial.crm.entity.Deal;
 import com.vaadin.tutorial.crm.entity.Company;
 import com.vaadin.tutorial.crm.entity.User;
 import com.vaadin.tutorial.crm.model.ComplexDealDTO;
+import com.vaadin.tutorial.crm.model.DealContactDTO;
 import com.vaadin.tutorial.crm.repository.DealRepository;
 import com.vaadin.tutorial.crm.repository.UserRepository;
 import com.vaadin.tutorial.crm.repository.CompanyRepository;
@@ -54,10 +55,15 @@ public class DealService {
         return result;
     }
 
+    public List<DealContactDTO> findDealContacts(String deal) {
+        List<DealContactDTO> result = dealRepository.findDealContacts(deal);
+        return result;
+    }
+
     public void save(Deal deal) throws IOException {
         if (deal == null) {
             LOGGER.log(Level.SEVERE,
-                "Contact is null. Are you sure you have connected your form to the application?");
+                "Deal is null. Are you sure you have connected your form to the application?");
             return;
         }
         dealRepository.save(deal);

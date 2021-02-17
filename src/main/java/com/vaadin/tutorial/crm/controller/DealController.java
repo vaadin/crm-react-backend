@@ -1,6 +1,5 @@
 package com.vaadin.tutorial.crm.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +19,11 @@ import com.vaadin.tutorial.crm.service.DealService;
 
 @RestController
 public class DealController {
-  @Autowired
   DealService dealService;
+
+  DealController(DealService dealService) {
+    this.dealService = dealService;
+  }
 
   @GetMapping("/deals")
   public ResponseEntity<Object> getDeals(@RequestParam(required=false) Map<String, String> all) {
@@ -37,6 +39,11 @@ public class DealController {
     Double maxPrice = (max == null) ? -1 : Double.parseDouble(max);
     String isActive = all.get("active");
     return new ResponseEntity<>(dealService.findAll(companies, contacts, users, minPrice, maxPrice, isActive), HttpStatus.OK);
+  }
+
+  @GetMapping("/deal-contacts")
+  public ResponseEntity<Object> getDealContacts(@RequestParam(required=false, value="deal") String deal) {
+    return new ResponseEntity<>(dealService.findDealContacts(deal), HttpStatus.OK);
   }
 
   @PostMapping("/deal")

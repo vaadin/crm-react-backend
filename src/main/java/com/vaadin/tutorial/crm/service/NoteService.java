@@ -2,8 +2,12 @@ package com.vaadin.tutorial.crm.service;
 
 import com.vaadin.tutorial.crm.entity.Note;
 import com.vaadin.tutorial.crm.entity.Deal;
+import com.vaadin.tutorial.crm.entity.User;
+import com.vaadin.tutorial.crm.model.NoteDTO;
 import com.vaadin.tutorial.crm.repository.DealRepository;
 import com.vaadin.tutorial.crm.repository.NoteRepository;
+import com.vaadin.tutorial.crm.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
@@ -13,16 +17,37 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.IOException;
 
 @Service
 public class NoteService {
     private static final Logger LOGGER = Logger.getLogger(NoteService.class.getName());
     private NoteRepository noteRepository;
     private DealRepository dealRepository;
+    private UserRepository userRepository;
 
-    public NoteService(NoteRepository noteRepository, DealRepository dealRepository) {
+    public NoteService(
+        NoteRepository noteRepository,
+        DealRepository dealRepository,
+        UserRepository userRepository)
+    {
         this.noteRepository = noteRepository;
         this.dealRepository = dealRepository;
+        this.userRepository = userRepository;
+    }
+
+    public List<NoteDTO> findByDeal(String deal) {
+        List<NoteDTO> result = noteRepository.search(deal);
+        return result;
+    }
+
+    public void save(Note note) throws IOException {
+        if (note == null) {
+            LOGGER.log(Level.SEVERE,
+                "Note is null. Are you sure you have connected your form to the application?");
+            return;
+        }
+        noteRepository.save(note);
     }
 
     @PostConstruct
@@ -30,6 +55,7 @@ public class NoteService {
         if (noteRepository.count() == 0) {
             Random r = new Random(0);
             List<Deal> deals = dealRepository.findAll();
+            List<User> users = userRepository.findAll();
 
             noteRepository.saveAll(
                 IntStream.range(1, 81)
@@ -40,6 +66,7 @@ public class NoteService {
                         Timestamp end = new Timestamp(System.currentTimeMillis());
                         note.setCreatedAt(new Timestamp(r.nextLong() % (end.getTime() - start.getTime()) + start.getTime()));
                         note.setDeal(deals.get(r.nextInt(deals.size())));
+                        note.setUser(users.get(r.nextInt(users.size())));
                         return note;
                     })
                     .collect(Collectors.toList()));

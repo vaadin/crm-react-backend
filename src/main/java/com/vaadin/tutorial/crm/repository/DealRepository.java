@@ -2,6 +2,7 @@ package com.vaadin.tutorial.crm.repository;
 
 import com.vaadin.tutorial.crm.entity.Deal;
 import com.vaadin.tutorial.crm.model.ComplexDealDTO;
+import com.vaadin.tutorial.crm.model.DealContactDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,12 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
     @Param("minPrice") Double minPrice,
     @Param("maxPrice") Double maxPrice,
     @Param("isActive") String isActive);
+
+  @Query("SELECT DISTINCT NEW "
+        + "com.vaadin.tutorial.crm.model.DealContactDTO("
+        + "dc.contact.id, dc.role) "
+        + "FROM DealContact dc "
+        + "WHERE :deal is null or CAST(dc.deal.id as string) = :deal"
+  )
+  List<DealContactDTO> findDealContacts(@Param("deal") String deal);
 }

@@ -19,6 +19,9 @@ public class Note extends AbstractEntity {
   @ManyToOne()
   private Deal deal;
 
+  @ManyToOne()
+  private User user;
+
   public Note() {
   }
 
@@ -26,6 +29,7 @@ public class Note extends AbstractEntity {
     setText(text);
     setCreatedAt(created_at);
     setDeal(deal);
+    setUser(user);
   }
 
   public String getText() {
@@ -51,5 +55,13 @@ public class Note extends AbstractEntity {
 
   public void setDeal(Deal deal) {
     this.deal = deal;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 }

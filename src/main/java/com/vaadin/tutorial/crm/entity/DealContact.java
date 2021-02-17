@@ -13,13 +13,6 @@ public class DealContact extends AbstractEntity {
     DecisionMaker, Consulted, Informed
   }
 
-  // @NotNull
-  // private Long contact_id;
-
-  // @NotNull
-  // @NotEmpty
-  // private String contact_name;
-
   @Enumerated(EnumType.STRING)
   @NotNull
   private DealContact.Roles role;

@@ -12,6 +12,9 @@ public class User extends AbstractEntity {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private List<Deal> deals = new LinkedList<>();
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  private List<Note> notes = new LinkedList<>();
+
   public User() {
   }
 
