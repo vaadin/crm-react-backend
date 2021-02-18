@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vaadin.tutorial.crm.entity.Contact;
 import com.vaadin.tutorial.crm.service.ContactService;
 
+import java.util.Map;
 import java.io.IOException;
 
 @RestController
@@ -23,8 +24,10 @@ public class ContactController {
   ContactService contactService;
 
   @GetMapping("/contacts")
-  public ResponseEntity<Object> getContacts(@RequestParam(required=false, value="search") String search) {
-    return new ResponseEntity<>(contactService.findAll(search), HttpStatus.OK);
+  public ResponseEntity<Object> getContacts(@RequestParam(required=false)  Map<String, String> all) {
+    String company = all.get("company");
+    String name = all.get("search");
+    return new ResponseEntity<>(contactService.findAll(company, name), HttpStatus.OK);
   }
 
   @PostMapping("/contact")

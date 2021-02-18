@@ -33,8 +33,8 @@ public class ContactService {
         return contactRepository.findAll();
     }
 
-    public List<ContactCompanyDTO> findAll(String filterText) {
-        return  contactRepository.search(filterText);
+    public List<ContactCompanyDTO> findAll(String companyId, String filterText) {
+        return  contactRepository.search(companyId, filterText);
     }
 
     public long count() {

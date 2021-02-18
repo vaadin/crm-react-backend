@@ -12,7 +12,8 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
         + "com.vaadin.tutorial.crm.model.NoteDTO("
         + "n.id, n.text, n.created_at, n.user.id, n.user.name) "
         + "FROM Note n "
-        + "WHERE :deal is null or CAST(n.deal.id as string) = :deal"
+        + "WHERE :deal is null or CAST(n.deal.id as string) = :deal "
+        + "ORDER BY n.created_at DESC"
   )
   List<NoteDTO> search(@Param("deal") String deal);
 }

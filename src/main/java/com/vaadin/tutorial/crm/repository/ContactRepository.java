@@ -13,8 +13,12 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
             + "com.vaadin.tutorial.crm.model.ContactCompanyDTO("
             + "c.id, c.firstName, c.lastName, c.email, c.status, cp.id, cp.name) "
             + "FROM Contact c LEFT JOIN c.company cp "
-            + "WHERE (:searchTerm is null) or (lower(concat(c.firstName, ' ', c.lastName)) like lower(concat('%', :searchTerm, '%')))"
+            + "WHERE (:searchTerm is null or lower(concat(c.firstName, ' ', c.lastName)) like lower(concat('%', :searchTerm, '%'))) "
+            + "and (:company is null or CAST(cp.id as string) = :company)"
     )
-    List<ContactCompanyDTO> search(@Param("searchTerm") String searchTerm);
+    List<ContactCompanyDTO> search(
+        @Param("company") String company,
+        @Param("searchTerm") String searchTerm
+    );
     boolean existsByEmail(String email);
 }
