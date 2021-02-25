@@ -13,11 +13,14 @@ import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.util.Random;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
+import io.jsonwebtoken.Jwts;
 
 @Service
 public class NoteService {
@@ -41,12 +44,29 @@ public class NoteService {
         return result;
     }
 
-    public void save(Note note) throws IOException {
-        if (note == null) {
-            LOGGER.log(Level.SEVERE,
-                "Note is null. Are you sure you have connected your form to the application?");
-            return;
+    public void save(Map<String, String> data) throws IOException {
+        String text = data.get("text");
+        String user = data.get("user");
+        String deal = data.get("deal");
+
+        if (text == null || user == null || deal == null) {
+            throw new IOException("No data");
         }
+
+        String username = Jwts.parser().setSigningKey("SecretKeyToGenJWTs".getBytes())
+            .parseClaimsJws(user.replaceAll("Bearer ",""))
+            .getBody().getSubject();
+
+        Optional<Deal> optDeal = dealRepository.findById(Long.valueOf(deal));
+        if (!optDeal.isPresent()) {
+            throw new IOException("No deal");
+        }
+
+        Note note = new Note();
+        note.setText(text);
+        note.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        note.setUser(userRepository.findByName(username));
+        note.setDeal(optDeal.get());
         noteRepository.save(note);
     }
 

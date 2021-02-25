@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
+import java.util.Map;
 
 import com.vaadin.tutorial.crm.entity.Note;
 import com.vaadin.tutorial.crm.service.NoteService;
@@ -26,7 +27,7 @@ public class NoteController {
   }
 
   @PostMapping("/note")
-  public ResponseEntity<String> addNote(@RequestBody Note note) {
+  public ResponseEntity<String> addNote(@RequestBody Map<String, String> note) {
     try {
       noteService.save(note);
       return new ResponseEntity<>("success", HttpStatus.OK);
