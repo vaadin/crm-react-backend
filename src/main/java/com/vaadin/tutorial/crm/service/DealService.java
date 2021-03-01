@@ -69,6 +69,15 @@ public class DealService {
         dealRepository.save(deal);
     }
 
+    public void delete(Long id) {
+        Optional<Deal> opt = dealRepository.findById(id);
+
+        if (opt.isPresent()) {
+            Deal deal = opt.get();
+            dealRepository.delete(deal);
+        }
+    }
+
     public Map<String, Object> update(Long id, Deal d) throws IOException {
         Optional<Deal> opt = dealRepository.findById(id);
 
@@ -77,6 +86,8 @@ public class DealService {
             deal.setName(d.getName());
             deal.setPrice(d.getPrice());
             deal.setStatus(d.getStatus());
+            deal.setUser(d.getUser());
+            deal.setCompany(d.getCompany());
             dealRepository.save(deal);
 
             Map<String, Object> updatedItem = new HashMap();

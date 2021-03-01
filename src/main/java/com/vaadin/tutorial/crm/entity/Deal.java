@@ -86,6 +86,10 @@ public class Deal extends AbstractEntity {
     return notes;
   }
 
+  public void setDealContacts(List<DealContact> dcs) {
+    this.dealContacts = dcs;
+  }
+
   public List<DealContact> getDealContacts() {
     return dealContacts;
   }
