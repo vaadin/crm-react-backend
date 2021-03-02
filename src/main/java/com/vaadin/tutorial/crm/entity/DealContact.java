@@ -29,7 +29,7 @@ public class DealContact extends AbstractEntity {
 
   public DealContact(Contact contact, DealContact.Roles role, Deal deal) {
     setContact(contact);
-    setContactRole(role);
+    setRole(role);
     setDeal(deal);
   }
 
@@ -41,11 +41,11 @@ public class DealContact extends AbstractEntity {
     this.contact = contact;
   }
 
-  public Roles getContactRole() {
+  public Roles getRole() {
     return role;
   }
 
-  public void setContactRole(Roles role) {
+  public void setRole(Roles role) {
     this.role = role;
   }
 

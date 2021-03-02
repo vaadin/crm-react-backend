@@ -1,6 +1,5 @@
 package com.vaadin.tutorial.crm.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +47,6 @@ public class Note extends AbstractEntity {
     this.created_at = created_at;
   }
 
-  @JsonIgnore
   public Deal getDeal() {
     return deal;
   }

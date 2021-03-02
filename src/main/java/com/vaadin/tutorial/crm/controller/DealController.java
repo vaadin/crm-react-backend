@@ -71,7 +71,12 @@ public class DealController {
   }
 
   @DeleteMapping("/deal/{id}")
-  public void deleteDeal(@PathVariable(value="id") Long id) {
-    dealService.delete(id);
+  public ResponseEntity<Object> deleteDeal(@PathVariable(value="id") Long id) {
+    try {
+      dealService.delete(id);
+      return new ResponseEntity<>("success", HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+    }
   }
 }

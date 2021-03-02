@@ -1,6 +1,7 @@
 package com.vaadin.tutorial.crm.service;
 
 import com.vaadin.tutorial.crm.entity.Deal;
+import com.vaadin.tutorial.crm.entity.DealContact;
 import com.vaadin.tutorial.crm.entity.Company;
 import com.vaadin.tutorial.crm.entity.User;
 import com.vaadin.tutorial.crm.model.ComplexDealDTO;
@@ -8,11 +9,16 @@ import com.vaadin.tutorial.crm.model.DealContactDTO;
 import com.vaadin.tutorial.crm.repository.DealRepository;
 import com.vaadin.tutorial.crm.repository.UserRepository;
 import com.vaadin.tutorial.crm.repository.CompanyRepository;
+import com.vaadin.tutorial.crm.repository.ContactRepository;
+import com.vaadin.tutorial.crm.repository.DealContactRepository;
+// import com.vaadin.tutorial.crm.service.DealContactService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.annotation.PostConstruct;
 import java.util.Random;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,17 +35,23 @@ public class DealService {
     private DealRepository dealRepository;
     private CompanyRepository companyRepository;
     private UserRepository userRepository;
+    private ContactRepository contactRepository;
+    private DealContactRepository dealContactRepository;
     private PasswordEncoder passwordEncoder;
 
     public DealService(
         DealRepository dealRepository,
         CompanyRepository companyRepository,
         UserRepository userRepository,
+        ContactRepository contactRepository,
+        DealContactRepository dealContactRepository,
         PasswordEncoder passwordEncoder
     ) {
         this.dealRepository = dealRepository;
         this.companyRepository = companyRepository;
         this.userRepository = userRepository;
+        this.contactRepository = contactRepository;
+        this.dealContactRepository = dealContactRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -60,21 +72,39 @@ public class DealService {
         return result;
     }
 
-    public void save(Deal deal) throws IOException {
-        if (deal == null) {
+    public void save(Deal d) throws IOException {
+        if (d == null) {
             LOGGER.log(Level.SEVERE,
                 "Deal is null. Are you sure you have connected your form to the application?");
             return;
         }
-        dealRepository.save(deal);
+
+        Deal deal = new Deal();
+        deal.setName(d.getName());
+        deal.setPrice(d.getPrice());
+        deal.setStatus(Deal.Status.New);
+        deal.setUser(d.getUser());
+        deal.setCompany(d.getCompany());
+
+        Deal newDeal = dealRepository.save(deal);
+
+        for (DealContact dc : d.getDealContacts()) {
+            DealContact newDC = new DealContact();
+            newDC.setDeal(newDeal);
+            newDC.setContact(contactRepository.findById(dc.getId()).get());
+            newDC.setRole(dc.getRole());
+            dealContactRepository.save(newDC);
+        }
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws IOException {
         Optional<Deal> opt = dealRepository.findById(id);
 
         if (opt.isPresent()) {
             Deal deal = opt.get();
             dealRepository.delete(deal);
+        } else {
+            throw new IOException("Can not find the deal");
         }
     }
 
@@ -88,6 +118,16 @@ public class DealService {
             deal.setStatus(d.getStatus());
             deal.setUser(d.getUser());
             deal.setCompany(d.getCompany());
+
+            dealContactRepository.deleteByDeal(d);
+            for (DealContact dc : d.getDealContacts()) {
+                DealContact newDC = new DealContact();
+                newDC.setDeal(d);
+                newDC.setContact(contactRepository.findById(dc.getId()).get());
+                newDC.setRole(dc.getRole());
+                dealContactRepository.save(newDC);
+            }
+
             dealRepository.save(deal);
 
             Map<String, Object> updatedItem = new HashMap();

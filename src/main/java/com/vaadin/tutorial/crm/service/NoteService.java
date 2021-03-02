@@ -44,10 +44,9 @@ public class NoteService {
         return result;
     }
 
-    public void save(Map<String, String> data) throws IOException {
-        String text = data.get("text");
-        String user = data.get("user");
-        String deal = data.get("deal");
+    public void save(Note n, String user) throws IOException {
+        Deal deal = n.getDeal();
+        String text = n.getText();
 
         if (text == null || user == null || deal == null) {
             throw new IOException("No data");
@@ -57,7 +56,7 @@ public class NoteService {
             .parseClaimsJws(user.replaceAll("Bearer ",""))
             .getBody().getSubject();
 
-        Optional<Deal> optDeal = dealRepository.findById(Long.valueOf(deal));
+        Optional<Deal> optDeal = dealRepository.findById(deal.getId());
         if (!optDeal.isPresent()) {
             throw new IOException("No deal");
         }

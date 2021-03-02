@@ -35,7 +35,7 @@ public class DealContactService {
                 int size = contacts.size();
                 if (size > 0) {
                     dc.setDeal(deal);
-                    dc.setContactRole(DealContact.Roles.values()[r.nextInt(DealContact.Roles.values().length)]);
+                    dc.setRole(DealContact.Roles.values()[r.nextInt(DealContact.Roles.values().length)]);
                     Contact contact = contacts.get(r.nextInt(size));
                     dc.setContact(contact);
                     dealContactRepository.save(dc);
